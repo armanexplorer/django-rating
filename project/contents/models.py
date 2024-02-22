@@ -13,6 +13,9 @@ class Content(models.Model):
         verbose_name = 'Content'
         verbose_name_plural = 'Contents'
 
+    def __str__(self):
+        return self.title
+
     @property
     def rating_num(self):
         return self.ratings.all().count()
