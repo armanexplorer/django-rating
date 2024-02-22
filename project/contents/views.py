@@ -1,7 +1,7 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 
-from .serializers import ContentListSerializer
-from .models import Content
+from .serializers import ContentListSerializer, RatingCreateSerializer
+from .models import Content, Rating
 
 
 class ContentListAPIView(ListAPIView):
@@ -9,8 +9,9 @@ class ContentListAPIView(ListAPIView):
     queryset = Content.objects.all()
 
 
-# class TodoDetailAPIView(RetrieveUpdateDestroyAPIView):
-#     serializer_class = TodoSerializer
-#     queryset = Todo.objects.all()
-#     permission_classes = (IsAuthenticated, UserIsOwnerTodo)
+class RatingCreateAPIView(CreateAPIView):
+    serializer_class = RatingCreateSerializer
+    queryset = Rating.objects.all()
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

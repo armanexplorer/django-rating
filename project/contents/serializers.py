@@ -19,4 +19,23 @@ class ContentListSerializer(serializers.ModelSerializer):
         except Rating.DoesNotExist:
             return None
         else:
-            return rating  # Replace with the actual field name
+            return rating.rating  # Replace with the actual field name
+
+
+class RatingCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ('content', 'rating')
+
+    def create(self, validated_data):
+        content = validated_data['content']
+        user = validated_data['user']
+
+        # check if there is this combination of user and content already, so we should only update
+        try:
+            rating_obj = Rating.objects.get(content=content, user=user)
+            rating_obj.rating = validated_data['rating']
+            rating_obj.save()
+            return rating_obj
+        except Rating.DoesNotExist:
+            return Rating.objects.create(**validated_data)
