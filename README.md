@@ -1,4 +1,4 @@
-# Project Name
+# Django Rating API
 
 The project is a Django-based web application that allows users to list and view content. Each user can rate each piece of content only once.
 
@@ -19,6 +19,7 @@ To run the project locally, follow these steps:
 4. Install the project dependencies: `pip install -r requirements.txt`
 5. Apply database migrations: `python manage.py migrate`
 6. Start the development server: `python manage.py runserver`
+7. You can check the API docs on `/swagger` or `/redoc`
 
 ## Usage
 
