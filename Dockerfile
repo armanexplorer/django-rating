@@ -19,4 +19,4 @@ COPY project /app
 EXPOSE 8000
 
 # Run Gunicorn with the specified configuration
-CMD ["gunicorn", "-c", "gunicorn.conf.py"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn"]
