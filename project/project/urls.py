@@ -1,5 +1,5 @@
 """
-URL configuration for project project.
+URL configuration for project `project`.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -15,8 +15,33 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.conf import settings
+from django.urls import path, include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title=settings.SWAGGER_APP_NAME,
+        default_version=f'v{settings.SWAGGER_APP_VERSION}',
+        description=settings.SWAGGER_APP_DESCRIPTION,
+    ),
+    public=True,
+)
+
+api_urls = [
+    path('contents', include('contents.urls')),
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+
+    # docs
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc'),
+
+    # project apps urls
+    path('api/', include(api_urls))
 ]

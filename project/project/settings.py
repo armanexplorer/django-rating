@@ -46,7 +46,11 @@ INSTALLED_APPS = [
 
     # project apps
     'users.apps.UsersConfig',
-    'contents.apps.ContentsConfig'
+    'contents.apps.ContentsConfig',
+    
+    # third-party apps
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +133,8 @@ STATIC_ROOT = BASE_DIR / "static"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Swagger Settings
-APP_VERSION = '1.0.0'
-APP_NAME = 'Your project name'
-APP_DESCRIPTION = 'Your project description'
+SWAGGER_APP_VERSION = env.str('SWAGGER_APP_VERSION', '1.0.0')
+SWAGGER_APP_NAME = env.str('SWAGGER_APP_NAME', default='project')
+SWAGGER_APP_DESCRIPTION = env.str('SWAGGER_APP_DESCRIPTION', default='project descriptions')
+
+AUTH_USER_MODEL = 'users.User'
